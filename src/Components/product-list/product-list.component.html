@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 text-center">
+    <div class="col" *ngFor="let product of allProducts; let i = index">
+      <a routerLink="/product/{{ product.id }}"
+        ><img src="{{ product.url }}" class="w-75 rounded" alt="{{product.name}}"
+      /></a>
+
+      <h4 class="fw-bold mt-2">{{ product.name }}</h4>
+      <p class="fw-bold">{{ product.price | currency : "USD" }}</p>
+
+      <button
+        type="button"
+        class="my-4 btn btn-dark"
+        data-bs-toggle="modal"
+        attr.data-bs-target="#staticBackdrop{{ product.id }}"
+        (click)="formSubmit(product)"
+      >
+        Add To Cart
+      </button>
+
+      <div
+        class="modal fade"
+        id="staticBackdrop{{ product.id }}"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                {{ product.name }} added to your Cart
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">{{ product.name }}</div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
+                Understood
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

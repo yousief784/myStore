@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="card mb-3">
+    <div class="row g-0">
+      <div class="col-md-3">
+        <img
+          src="{{ product.url }}"
+          class="img-fluid"
+          alt="{{ product.name }}"
+        />
+      </div>
+      <div class="col-md-9">
+        <div class="card-body">
+          <h2 class="card-title">{{ product.name }}</h2>
+          <h5 class="card-text">
+            {{ product.description }}
+          </h5>
+          <p class="card-text">Price:
+            <small class="text-muted">{{
+              product.price | currency : "USD"
+            }}</small>
+          </p>
+          <button
+            type="button"
+            class="btn btn-dark"
+            data-bs-toggle="modal"
+            attr.data-bs-target="#staticBackdrop{{ product.id }}"
+            (click)="formSubmit()"
+          >
+            Add To Cart
+          </button>
+        </div>
+      </div>
+
+      <div
+        class="modal fade"
+        id="staticBackdrop{{ product.id }}"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">
+                {{ product.name }} added to your Cart
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">{{ product.name }}</div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-dismiss="modal"
+              >
+                Understood
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

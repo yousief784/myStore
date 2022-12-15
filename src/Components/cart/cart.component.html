@@ -1,0 +1,58 @@
+<ng-container>
+  <ng-container *ngIf="isCartEmpty; else cartEmpty">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col">
+          <div class="card mb-3 w-75" *ngFor="let product of cart.products">
+            <div class="row g-0">
+              <div class="col-md-3">
+                <img
+                  src="{{ product.url }}"
+                  class="img-fluid"
+                  alt="{{ product.name }}"
+                />
+              </div>
+              <div class="col-md-9">
+                <div class="card-body">
+                  <h2 class="card-title">{{ product.name }}</h2>
+                  <input type="number" min="0" class="form-control" (change)="changeAmount($event, product.id)" value="{{product.amount}}">
+                  <p>total in this product: {{ product.amount && product.amount * product.price }}</p>
+                  <button type="button" class="btn btn-dark mt-4" (click)="removeFromCart(product.id)">Remove from Cart</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h1>Total: {{cart.total | currency: 'USD'}}</h1>
+        </div>
+        <div class="col">
+          <form #form='ngForm'>
+            <div>
+              <label>Full Name</label>
+              <input type="text" required minlength="3" [(ngModel)]="fullName" name="fullName" class="form-control mt-2 w-50">
+            </div>
+
+            <div>
+              <label>Address</label>
+              <input type="text" required minlength="6" [(ngModel)]="address" name="Address" class="form-control mt-2 w-50">
+            </div>
+
+            <div>
+              <label>Credit Card Number</label>
+              <input type="text" required minlength="16" maxlength="16" [(ngModel)]="creditCard" name="credit Card Number" class="form-control mt-2 w-50">
+              <p class="text-muted"><small>We will never share your payment details with anyone else.</small></p>
+            </div>
+
+            <button [disabled]="form.invalid" (click)="formSubmit()" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #cartEmpty>
+    <div class="text-center fw-bold">
+      <div class="display-1">Cart Is Empty</div>
+      <a routerLink="/" class="btn btn-dark mt-5">Back to Home</a>
+    </div>
+  </ng-template>
+</ng-container>
