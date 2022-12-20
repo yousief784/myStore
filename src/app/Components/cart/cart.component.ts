@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {CartService} from "../../Services/Cart/cart-service.service";
 import {Cart} from "../../Model/cart";
 import {Router} from "@angular/router";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-cart',
@@ -12,10 +13,8 @@ export class CartComponent implements OnInit {
   cart: Cart;
   total: number;
   isCartEmpty: boolean;
-  fullName: string = '';
-  address: string = '';
-  creditCard: string = '';
-  constructor(private cartService: CartService, private route: Router) {
+  @Input() confirmTotal = this.cartService.cart.total
+  constructor(private cartService: CartService) {
     this.cart = this.cartService.cart;
     this.total = this.cart.total
 
@@ -24,13 +23,6 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  formSubmit =()=>{
-    this.route.navigate(['/confirmation'], {
-      queryParams: {name: this.fullName, total: this.cartService.cart.total}
-    })
-  }
-
   removeFromCart = (productId: number)=>{
     this.cartService.removeFromCart(productId);
     if(this.cartService.cart.total == 0) !this.isCartEmpty

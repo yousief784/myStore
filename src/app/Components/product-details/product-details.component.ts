@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Product } from 'src/Model/product';
-import { CartService } from 'src/Services/Cart/cart-service.service';
-import { ProductsService } from 'src/Services/prodcuts-services/products.service';
+import { CartService } from '../../Services/Cart/cart-service.service';
+import { ProductsService } from '../../Services/prodcuts-services/products.service';
 
 @Component({
   selector: 'product-details',
@@ -35,7 +34,6 @@ export class ProductDetailsComponent implements OnInit {
   ngOnInit(): void {}
 
   formSubmit(){
-    console.log(this.cartService.checkIfProductExistInCart((this.product.id)))
     if (
       this.cartService.checkIfProductExistInCart(this.product.id)) {
       this.cartService.updateProductAmountInCart(this.product.id, 1);

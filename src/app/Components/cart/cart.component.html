@@ -1,0 +1,69 @@
+<ng-container>
+  <ng-container *ngIf="isCartEmpty; else cartEmpty">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col">
+          <div class="card mb-3 w-75" *ngFor="let product of cart.products">
+            <div class="row g-0">
+              <div class="col-md-3">
+                <img
+                  src="{{ product.url }}"
+                  class="img-fluid"
+                  alt="{{ product.name }}"
+                />
+              </div>
+              <div class="col-md-9">
+                <div class="card-body">
+                  <h2 class="card-title">{{ product.name }}</h2>
+                  <input type="number"
+                         min="1"
+                         class="form-control"
+                         (change)="changeAmount($event, product.id)"
+                         value="{{product.amount}}">
+                  <p>total in this product: {{ product.amount && product.amount * product.price }}</p>
+
+                  <button type="button" class="btn btn-dark" data-bs-toggle="modal" attr.data-bs-target="#removeFromCart{{product.id}}">
+                    Remove from Cart
+                  </button>
+
+                  <!-- Modal -->
+                  <div class="modal fade" id="removeFromCart{{product.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <form (submit)="removeFromCart(product.id)">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Remove from Cart</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            Remove {{ product.name }} from Cart
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-danger" data-bs-dismiss="modal">Remove</button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <h1>Total: {{cart.total | currency: 'USD'}}</h1>
+        </div>
+        <div class="col">
+          <app-check-out-form [confirmTotal]="cart.total"></app-check-out-form>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <ng-template #cartEmpty>
+    <div class="text-center fw-bold">
+      <div class="display-1">Cart Is Empty</div>
+      <a routerLink="/" class="btn btn-dark mt-5">Back to Home</a>
+    </div>
+  </ng-template>
+</ng-container>
