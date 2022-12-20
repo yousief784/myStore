@@ -1,3 +1,9 @@
+## Project Description
+- this porject for angular nanodegree deploma on udacity
+- user can see list of product and add them to his cart
+- user can purchase by his credit card
+
+
 ### Scripts To Run Project
 
 -   Install: `npm install`
